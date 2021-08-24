@@ -11,11 +11,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
-// import { useDispatch } from "react-redux";
-
-// import postStyles from "./styles";
+import { useDispatch } from "react-redux";
+import { deletePost, likePost } from "../../../actions/posts";
 
 function Post({ post, setCurrentId }) {
+  const dispatch = useDispatch();
   console.log(post, "From Post.js *********");
   return (
     <Card
@@ -87,7 +87,7 @@ function Post({ post, setCurrentId }) {
         {post.title}
       </Typography>
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" component="p">
           {post.message}
         </Typography>
       </CardContent>
@@ -98,11 +98,25 @@ function Post({ post, setCurrentId }) {
           justifyContent: "space-between",
         }}
       >
-        <Button size="small" color="primary" onClick={() => {}}>
-          <ThumbUpAltIcon fontSize="small" /> Like {post.likesCount}
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => {
+            dispatch(likePost(post._id));
+          }}
+        >
+          <ThumbUpAltIcon fontSize="small" />
+          &nbsp;Like&nbsp;{post.likesCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
-          <DeleteIcon fontSize="small" /> Delete
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => {
+            dispatch(deletePost(post._id));
+          }}
+        >
+          <DeleteIcon fontSize="small" />
+          &nbsp;Delete
         </Button>
       </CardActions>
     </Card>
